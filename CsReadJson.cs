@@ -37,23 +37,18 @@ public class CsReadJson : MonoBehaviour {
 	public int maxDepth;
 	private int depth;
 
-	public	int x_ ;
-	public	int y_;
-	public	int z_ ;
+	private	int x_ ;
+	private	int y_;
+	private	int z_ ;
 
-	private void Initialize (CsReadJson parent) {
-		mesh = parent.mesh;
-		material = parent.material;
-		maxDepth = parent.maxDepth;
-		depth = parent.depth + 1;
-		transform.parent = parent.transform;
-	}
+	private	int x_1 ;
+	private	int y_1;
+	private	int z_1 ;
 
-	private IEnumerator CreateChildren () {
-			yield return new WaitForSeconds(0.5f);
-			new GameObject("Fractal Child").AddComponent<CsReadJson>().
-			Initialize(this);
-	}
+	private	int x_2 ;
+	private	int y_2;
+	private	int z_2 ;
+
 
     void Start()
     {
@@ -64,17 +59,36 @@ public class CsReadJson : MonoBehaviour {
 		x_ = stats_.Stats [0][0];
 		y_ = stats_.Stats [0][1];
 		z_ = stats_.Stats [0][2];
+
+		x_1 = stats_.Stats [1][0];
+		y_1 = stats_.Stats [1][1];
+		z_1 = stats_.Stats [1][2];
+
+		x_2 = stats_.Stats [2][0];
+		y_2 = stats_.Stats [2][1];
+		z_2 = stats_.Stats [2][2];
 	
 		gameObject.AddComponent<MeshFilter>().mesh = mesh;
 		gameObject.AddComponent<MeshRenderer>().material = material;
-
 		if (depth < maxDepth) {
-			StartCoroutine(CreateChildren());
+			GameObject g1=	new GameObject ("g1");
+			g1.transform.position = new Vector3 (x_, y_, z_);
+			g1.AddComponent<MeshFilter>().mesh = mesh;
+			g1.AddComponent<MeshRenderer>().material = material;
+
+			GameObject g2=new GameObject ("g2");
+			g2.transform.position = new Vector3 (x_1, y_1, z_1);
+			g2.AddComponent<MeshFilter>().mesh = mesh;
+			g2.AddComponent<MeshRenderer>().material = material;
+
+			GameObject g3=new GameObject ("g3");
+			g3.transform.position = new Vector3 (x_2, y_2, z_2);
+			g3.AddComponent<MeshFilter>().mesh = mesh;
+			g3.AddComponent<MeshRenderer>().material = material;
+
 		}
-
-		transform.position = new Vector3 (x_, y_, z_);
       }
-
+		
 }
 
 
